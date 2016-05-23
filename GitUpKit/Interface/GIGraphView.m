@@ -557,6 +557,27 @@ static void _DrawNode(GINode* node, CGContextRef context, CGFloat x, CGFloat y) 
     CGContextSetFillColorWithColor(context, node.primaryLine.color.CGColor);
     CGContextFillEllipseInRect(context, CGRectMake(x - kSubNodeDiameter / 2, y - kSubNodeDiameter / 2, kSubNodeDiameter, kSubNodeDiameter));
   }
+  
+  static NSDictionary* selectedAttributes1 = nil;
+  if (selectedAttributes1 == nil) {
+    CTFontRef font = CTFontCreateUIFontForLanguage(kCTFontUIFontSystem, 10.0, CFSTR("en-US"));
+    selectedAttributes1 = [@{(id)kCTForegroundColorFromContextAttributeName: (id)kCFBooleanTrue, (id)kCTFontAttributeName: (id)font} retain];
+    CFRelease(font);
+  }
+  static NSDictionary* selectedAttributes2 = nil;
+  if (selectedAttributes2 == nil) {
+    CTFontRef font = CTFontCreateUIFontForLanguage(kCTFontUIFontEmphasizedSystem, 10.0, CFSTR("en-US"));
+    selectedAttributes2 = [@{(id)kCTForegroundColorFromContextAttributeName: (id)kCFBooleanTrue, (id)kCTFontAttributeName: (id)font} retain];
+    CFRelease(font);
+  }
+
+  NSDateFormatter*_dateFormatter = [[NSDateFormatter alloc] init];
+  _dateFormatter.dateStyle = NSDateFormatterShortStyle;
+  _dateFormatter.timeStyle = NSDateFormatterShortStyle;
+
+      _DrawSelectedNode(context, x, y, node, selectedAttributes1, selectedAttributes2, _dateFormatter, FALSE);
+  
+  [_dateFormatter release];
 }
 
 static void _DrawTipNode(GINode* node, CGContextRef context, CGFloat x, CGFloat y) {
