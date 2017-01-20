@@ -558,6 +558,7 @@ static void _DrawNode(GINode* node, CGContextRef context, CGFloat x, CGFloat y) 
     CGContextFillEllipseInRect(context, CGRectMake(x - kSubNodeDiameter / 2, y - kSubNodeDiameter / 2, kSubNodeDiameter, kSubNodeDiameter));
   }
   
+//  if (onBranchMainLine) {
   static NSDictionary* selectedAttributes1 = nil;
   if (selectedAttributes1 == nil) {
     CTFontRef font = CTFontCreateUIFontForLanguage(kCTFontUIFontSystem, 10.0, CFSTR("en-US"));
@@ -578,6 +579,7 @@ static void _DrawNode(GINode* node, CGContextRef context, CGFloat x, CGFloat y) 
       _DrawSelectedNode(context, x, y, node, selectedAttributes1, selectedAttributes2, _dateFormatter, FALSE);
   
   [_dateFormatter release];
+//  }
 }
 
 static void _DrawTipNode(GINode* node, CGContextRef context, CGFloat x, CGFloat y) {
@@ -920,7 +922,7 @@ static void _DrawBranchTitle(CGContextRef context, CGFloat x, CGFloat y, CGPoint
     
     GCBranch* upstream = localBranch.upstream;
     if (upstream) {
-      _AppendAttributedString((CFMutableAttributedStringRef)multilineTitle, [NSString stringWithFormat:@"⬅ %@\n", upstream.name], multilineTitleAttributes);
+      _AppendAttributedString((CFMutableAttributedStringRef)multilineTitle, [NSString stringWithFormat:@"⬆︎ %@\n", upstream.name], multilineTitleAttributes);
       
       NSString* upstreamName = [upstream isKindOfClass:GCRemoteBranch.class] ? [(GCRemoteBranch*)upstream branchName] : upstream.name;
       NSRange upstreamNameRange = NSMakeRange(multilineTitle.length - upstreamName.length - 1, upstreamName.length); // -1 to exclude '\n'
